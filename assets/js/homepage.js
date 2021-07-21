@@ -33,22 +33,6 @@ var getUserRepos = function (user) {
             displayRepos(data, user);
         });
     });
-
-    fetch(apiUrl)
-        .then(function (response) {
-            // request was successful
-            if (response.ok) {
-                response.json().then(function (data) {
-                    displayRepos(data, user);
-                });
-            } else {
-                alert('Error: GitHub User Not Found');
-            }
-        })
-        .catch(function (error) {
-            // Notice this `.catch()` getting chained onto the end of the `.then()` method
-            alert("Unable to connect to GitHub");
-        });
 };
 
 getUserRepos();
@@ -57,21 +41,15 @@ displayRepos = function (repos, searchTerm) {
     repoContainerEl.textContent = "";
     repoSearchTerm.textContent = searchTerm;
 
-    // check if api returned any repos
-    if (repos.length === 0) {
-        repoContainerEl.textContent = "No repositories found.";
-        return;
-    }
     // Loop over repos
     for (var i = 0; i < repos.length; i++) {
-
         // format repo name
         var repoName = repos[i].owner.login + "/" + repos[i].name;
-
+      
         // create a container for each repo
         var repoEl = document.createElement("div");
         repoEl.classList = "list-item flex-row justify-space-between align-center";
-
+      
         // create a span element to hold repository name
         var titleEl = document.createElement("span");
         titleEl.textContent = repoName;
